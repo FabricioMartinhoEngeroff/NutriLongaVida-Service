@@ -28,4 +28,19 @@ public class MedidasPaciente {
     private double percentualGorduraCorporal;
     private double massaMuscular;
     private double indiceMassaCorporal;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente; // Adicione esta linha
+
+    // Calcula o IMC do paciente
+    public double calcularIMC() {
+        if (altura <= 0) {
+            throw new IllegalArgumentException("Altura deve ser maior que zero.");
+        }
+        if (peso <= 0) {
+            throw new IllegalArgumentException("Peso deve ser maior que zero.");
+        }
+        return peso / (altura * altura);
+    }
 }

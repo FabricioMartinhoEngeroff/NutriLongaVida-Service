@@ -1,4 +1,4 @@
-package com.DvFabricio.NutriLongaVida.dominio.consulta;
+package com.DvFabricio.NutriLongaVida.dominio.agendamento;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
