@@ -2,7 +2,8 @@ package com.DvFabricio.NutriLongaVida.dominio.paciente;
 
 import com.DvFabricio.NutriLongaVida.dominio.agendamento.Consulta;
 import com.DvFabricio.NutriLongaVida.dominio.alimento.Dieta;
-import com.DvFabricio.NutriLongaVida.dominio.endereco.Endereco;
+import com.DvFabricio.NutriLongaVida.dominio.objetosValor.Endereco;
+import com.DvFabricio.NutriLongaVida.dominio.Pagamento.CartaoCredito;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,11 +27,12 @@ public class Paciente {
     private String dataNascimento;
     private String email;
     private String telefone;
+    private String genero;
 
     @Embedded
     private Endereco endereco;
 
-    private String genero;
+
 
     @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
     private List<Consulta> historicoConsultas = new ArrayList<>();
@@ -40,6 +42,9 @@ public class Paciente {
 
     @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
     private List<MedidasPaciente> medidasCorporais = new ArrayList<>();
+
+    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CartaoCredito> cartoesCredito = new ArrayList<>();
 
     private Boolean ativo = Boolean.TRUE;
 
@@ -54,8 +59,28 @@ public class Paciente {
         this.endereco = new Endereco(dados.endereco());
     }
 
+    public void atualizarInformacoesPaciente(DadosAtualizacaoPaciente dados){
+        if(dados.nome() != null){
+            this.nome = dados.nome();
+        }
+        if (dados.email() != null) {
+            this.email = dados.email();
+        }
+        if (dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+        if (endereco != null) {
+            this.endereco.atualizarInformacaoEndereco(dados.dadosEndereco());
+        }
+
+    }
 
     public void excluir() {
         this.ativo = false;
     }
+
+    public void reativar() {
+        this.ativo = true;
+    }
+
 }

@@ -1,11 +1,9 @@
 package com.DvFabricio.NutriLongaVida.dominio.paciente;
 
-import com.DvFabricio.NutriLongaVida.dominio.endereco.DadosEndereco;
-import jakarta.validation.Valid;
+import com.DvFabricio.NutriLongaVida.dominio.objetosValor.DadosEndereco;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 
 public record DadosCadastroPaciente(
         @NotBlank(message = "Nome é obrigatório")
@@ -27,6 +25,6 @@ public record DadosCadastroPaciente(
         @NotBlank(message = "Gênero é obrigatório")
         String genero,
 
-        @NotBlank(message = "Dados do endereço são obrigatórios")
+        @NotNull(message = "Dados do endereço são obrigatórios")
         DadosEndereco endereco) {
 }

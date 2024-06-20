@@ -1,8 +1,7 @@
-package com.DvFabricio.NutriLongaVida.dominio.endereco;
+package com.DvFabricio.NutriLongaVida.dominio.objetosValor;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 
 public record DadosEndereco(
         @NotBlank(message = "Logradouro é obrigatório")

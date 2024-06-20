@@ -1,6 +1,6 @@
 package com.DvFabricio.NutriLongaVida.dominio.nutricionista;
 
-import com.DvFabricio.NutriLongaVida.dominio.endereco.Endereco;
+import com.DvFabricio.NutriLongaVida.dominio.objetosValor.Endereco;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,13 +31,13 @@ public class Nutricionista {
     private Boolean ativo;
 
     public Nutricionista(DadosCadastroNutricionista dados) {
+        this.ativo = true;
         this.nome = dados.nome();
         this.email = dados.email();
         this.telefone = dados.telefone();
         this.registroProfissionalCrm = dados.registroProfissionalCrm();
         this.especialidade = dados.especialidade();
         this.endereco = new Endereco(dados.endereco());
-        this.ativo = true;
     }
 
     public void atualizarInformacoesNutricionista(DadosAtualizacaoNutricionista dados) {
@@ -51,8 +51,12 @@ public class Nutricionista {
             this.telefone = dados.telefone();
         }
         if (endereco != null) {
-            this.endereco.atualizarInformaca(dados.dadosEndereco());
+            this.endereco.atualizarInformacaoEndereco(dados.dadosEndereco());
         }
 
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }

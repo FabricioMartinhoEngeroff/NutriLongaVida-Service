@@ -1,4 +1,4 @@
-package com.DvFabricio.NutriLongaVida.Controller;
+package com.DvFabricio.NutriLongaVida.controller;
 
 import com.DvFabricio.NutriLongaVida.dominio.nutricionista.*;
 import jakarta.validation.Valid;
@@ -22,20 +22,22 @@ public class NutricionistaController {
         repository.save(new Nutricionista(dados));
     }
 
-
     @GetMapping
     public Page<DadosListagemNutricionista> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        return repository.findAll(paginacao).map(DadosListagemNutricionista::new);
+        return repository.findAllByAtivoTrue(paginacao).map(DadosListagemNutricionista::new);
     }
 
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid DadosAtualizacaoNutricionista dados) {
-        var medico = repository.getReferenceById(dados.id());
-        medico.atualizarInformacoesNutricionista(dados);
-
-
+        var nutricionista = repository.getReferenceById(dados.id());
+        nutricionista.atualizarInformacoesNutricionista(dados);
     }
 
-
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void excluir(@PathVariable Long id) {
+        var nutricionista = repository.getReferenceById(id);
+        nutricionista.excluir();
+    }
 }

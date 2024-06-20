@@ -1,6 +1,6 @@
 package com.DvFabricio.NutriLongaVida.dominio.nutricionista;
 
-import com.DvFabricio.NutriLongaVida.dominio.endereco.DadosEndereco;
+import com.DvFabricio.NutriLongaVida.dominio.objetosValor.DadosEndereco;
 import jakarta.validation.constraints.NotNull;
 
 public record DadosAtualizacaoNutricionista(
