@@ -1,6 +1,6 @@
 package com.DvFabricio.NutriLongaVida.controller;
 
-import com.DvFabricio.NutriLongaVida.dominio.paciente.*;
+import com.DvFabricio.NutriLongaVida.dominio.entities.paciente.*;
 import com.DvFabricio.NutriLongaVida.dominio.servicos.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,15 @@ public class PacienteController {
     public Page<DadosListagemPaciente> listar(@PageableDefault(size = 20, sort = {"nome"}) Pageable paginacao) {
         return repository.findAllByAtivoTrue(paginacao).map(DadosListagemPaciente::new);
     }
+
+    @GetMapping("/buscar")
+    public Page<DadosListagemPaciente> buscarPorNome(
+            @RequestParam String nome,
+            @PageableDefault(size = 20, sort = {"nome"}) Pageable paginacao) {
+        return repository.findByNomeIgnoreCaseContainingAndAtivoTrue(nome, paginacao)
+                .map(DadosListagemPaciente::new);
+    }
+
 
     @PutMapping
     @Transactional

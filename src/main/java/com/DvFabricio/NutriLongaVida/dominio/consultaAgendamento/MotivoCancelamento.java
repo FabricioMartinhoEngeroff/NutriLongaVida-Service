@@ -1,0 +1,17 @@
+package com.DvFabricio.NutriLongaVida.dominio.consultaAgendamento;
+
+public enum MotivoCancelamento {
+    PACIENTE_DESISTIU,
+    MEDICO_CANCELOU,
+    EMERGENCIA_MEDICA,
+    PROBLEMAS_DE_AGENDA,
+    CONDICAO_CLIMATICA_ADVERSA,
+    ALTERACAO_NO_HORARIO,
+    ATRASO_DO_PACIENTE,
+    ATRASO_DO_MEDICO,
+    FALHA_DE_COMUNICACAO,
+    DOENCA_CONTAGIOSA,
+    LUTO,
+    OUTROS;
+
+}
