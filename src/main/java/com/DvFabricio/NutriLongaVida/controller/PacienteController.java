@@ -1,7 +1,8 @@
 package com.DvFabricio.NutriLongaVida.controller;
 
-import com.DvFabricio.NutriLongaVida.dominio.entities.paciente.*;
-import com.DvFabricio.NutriLongaVida.dominio.servicos.PacienteService;
+import com.DvFabricio.NutriLongaVida.core.entities.paciente.*;
+import com.DvFabricio.NutriLongaVida.core.paciente.*;
+import com.DvFabricio.NutriLongaVida.core.paciente.service.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
