@@ -1,6 +1,4 @@
 package com.DvFabricio.NutriLongaVida.controller;
-
-import com.DvFabricio.NutriLongaVida.core.entities.paciente.*;
 import com.DvFabricio.NutriLongaVida.core.paciente.*;
 import com.DvFabricio.NutriLongaVida.core.paciente.service.PacienteService;
 import jakarta.validation.Valid;

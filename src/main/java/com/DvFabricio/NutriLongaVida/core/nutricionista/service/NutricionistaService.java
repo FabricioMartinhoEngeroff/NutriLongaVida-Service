@@ -47,7 +47,6 @@ public class NutricionistaService {
         repository.save(nutricionista);
         return converterParaDTO(nutricionista);
     }
-
     // Validar unicidade de CPF e CRM
     private void validarUnicidade(NutricionistaDTO dto) {
         repository.findByCpf(dto.cpf()).ifPresent(nutricionista -> {
@@ -77,13 +76,14 @@ public class NutricionistaService {
         repository.save(nutricionista);
     }
 
-    private Nutricionista buscarPorId(Long id) {
+    public Nutricionista buscarPorId(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Nutricionista não encontrado com id " + id));
     }
 
     private NutricionistaDTO converterParaDTO(Nutricionista nutricionista) {
         return new NutricionistaDTO(
+                nutricionista.getId(),
                 nutricionista.getNome(),
                 nutricionista.getEmail(),
                 nutricionista.getCpf(),
