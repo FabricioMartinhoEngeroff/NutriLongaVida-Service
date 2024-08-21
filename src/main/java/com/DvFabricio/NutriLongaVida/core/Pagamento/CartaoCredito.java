@@ -1,6 +1,6 @@
 package com.DvFabricio.NutriLongaVida.core.Pagamento;
 
-import com.DvFabricio.NutriLongaVida.core.paciente.Paciente;
+import com.DvFabricio.NutriLongaVida.core.paciente.domain.Paciente;
 import jakarta.persistence.*;
 import lombok.*;
 

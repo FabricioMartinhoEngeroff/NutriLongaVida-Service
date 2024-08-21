@@ -6,12 +6,16 @@ import com.DvFabricio.NutriLongaVida.core.nutricionista.domain.Especialidade;
 import com.DvFabricio.NutriLongaVida.core.nutricionista.domain.Nutricionista;
 import com.DvFabricio.NutriLongaVida.core.nutricionista.domain.NutricionistaDTO;
 import com.DvFabricio.NutriLongaVida.core.nutricionista.repository.NutricionistaRepository;
+import com.DvFabricio.NutriLongaVida.infra.excecoes.ValidacaoException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,29 +38,33 @@ class NutricionistaServiceTest {
     }
 
     @Test
-    @DisplayName("Deve listar nutricionistas ativos")
+    @DisplayName("Deve listar nutricionistas ativos com paginação")
     void listarAtivos() {
         Nutricionista nutricionista = criarNutricionista(true);
-        when(repository.findByAtivoTrue()).thenReturn(List.of(nutricionista));
+        Page<Nutricionista> page = new PageImpl<>(List.of(nutricionista));
+        when(repository.findAllByAtivoTrue(any(Pageable.class))).thenReturn(page);
 
-        List<NutricionistaDTO> ativos = service.listarAtivos();
+        Page<NutricionistaDTO> ativos = service.listarAtivos(Pageable.unpaged()); // Utilize Pageable.unpaged() ou um Pageable específico
 
-        assertEquals(1, ativos.size());
-        verify(repository, times(1)).findByAtivoTrue();
+        assertEquals(1, ativos.getTotalElements());
+        assertEquals("João", ativos.getContent().get(0).nome());
+        verify(repository, times(1)).findAllByAtivoTrue(any(Pageable.class));
     }
 
     @Test
-    @DisplayName("Deve buscar nutricionista por nome")
+    @DisplayName("Deve buscar nutricionista por nome com paginação")
     void buscarPorNome() {
         Nutricionista nutricionista = criarNutricionista(true);
-        when(repository.findByNome("João")).thenReturn(Optional.of(nutricionista));
+        Page<Nutricionista> page = new PageImpl<>(List.of(nutricionista));
+        when(repository.findByNomeIgnoreCaseContainingAndAtivoTrue(any(String.class), any(Pageable.class))).thenReturn(page);
 
-        Optional<NutricionistaDTO> result = service.buscarPorNome("João");
+        Page<NutricionistaDTO> result = service.buscarPorNome("João", Pageable.unpaged()); // Utilize Pageable.unpaged() ou um Pageable específico
 
-        assertTrue(result.isPresent());
-        assertEquals("João", result.get().nome());
-        verify(repository, times(1)).findByNome("João");
+        assertEquals(1, result.getTotalElements());
+        assertEquals("João", result.getContent().get(0).nome());
+        verify(repository, times(1)).findByNomeIgnoreCaseContainingAndAtivoTrue(any(String.class), any(Pageable.class));
     }
+
 
     @Test
     @DisplayName("Deve buscar nutricionistas por especialidade")
@@ -86,10 +94,10 @@ class NutricionistaServiceTest {
     @Test
     @DisplayName("Deve lançar exceção ao cadastrar nutricionista com CPF já existente")
     void cadastrarComCpfExistente() {
-        NutricionistaDTO dto = new NutricionistaDTO(null, "João", "joao@gmail.com", "99999999901", "12345", "CRM123", Especialidade.NUTRICAO_CLINICA_GERAL, new DadosEndereco("Rio Grande do sul", "Bom Principio", "Nova Columbia", "Rua Das Bergamoteiras", "95765000", 876, "Perto do Bar"));
+        NutricionistaDTO dto = new NutricionistaDTO(null, "João", "joao@gmail.com", "99999999901", "12345", "CRM123", Especialidade.NUTRICAO_CLINICA_GERAL, new DadosEndereco("Rio Grande do Sul", "Bom Principio", "Nova Columbia", "Rua Das Bergamoteiras", "95765000", 876, "Perto do Bar"));
         when(repository.findByCpf(dto.cpf())).thenReturn(Optional.of(criarNutricionista(true)));
 
-        assertThrows(IllegalArgumentException.class, () -> service.cadastrar(dto));
+        assertThrows(ValidacaoException.class, () -> service.cadastrar(dto));
         verify(repository, never()).save(any());
     }
 
@@ -118,19 +126,32 @@ class NutricionistaServiceTest {
     }
 
     @Test
-    @DisplayName("Deve lançar exceção ao tentar ativar ou desativar nutricionista com status já existente")
-    void ativarOuDesativarComStatusExistente() {
+    @DisplayName("Deve lançar exceção ao tentar ativar nutricionista já ativo")
+    void ativarNutricionistaJaAtivo() {
         Nutricionista nutricionistaAtivo = criarNutricionista(true);
-        Nutricionista nutricionistaInativo = criarNutricionista(false);
 
         when(repository.findById(1L)).thenReturn(Optional.of(nutricionistaAtivo));
 
-        assertThrows(IllegalStateException.class, () -> service.ativarNutricionista(1L));
+        ValidacaoException thrown = assertThrows(ValidacaoException.class, () -> {
+            service.ativarNutricionista(1L);
+        });
+
+        assertEquals("Nutricionista já está ativo", thrown.getMessage());
         verify(repository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("Deve lançar exceção ao tentar desativar nutricionista já inativo")
+    void desativarNutricionistaJaInativo() {
+        Nutricionista nutricionistaInativo = criarNutricionista(false);
 
         when(repository.findById(1L)).thenReturn(Optional.of(nutricionistaInativo));
 
-        assertThrows(IllegalStateException.class, () -> service.desativarNutricionista(1L));
+        ValidacaoException thrown = assertThrows(ValidacaoException.class, () -> {
+            service.desativarNutricionista(1L);
+        });
+
+        assertEquals("Nutricionista já está inativo", thrown.getMessage());
         verify(repository, never()).save(any());
     }
 }

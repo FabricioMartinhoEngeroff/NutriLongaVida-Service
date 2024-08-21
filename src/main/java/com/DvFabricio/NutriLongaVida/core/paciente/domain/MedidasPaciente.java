@@ -1,4 +1,4 @@
-package com.DvFabricio.NutriLongaVida.core.paciente;
+package com.DvFabricio.NutriLongaVida.core.paciente.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,5 +1,7 @@
 package com.DvFabricio.NutriLongaVida.core.paciente;
 
+import com.DvFabricio.NutriLongaVida.core.paciente.domain.Paciente;
+import com.DvFabricio.NutriLongaVida.core.paciente.repository.PacienteRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

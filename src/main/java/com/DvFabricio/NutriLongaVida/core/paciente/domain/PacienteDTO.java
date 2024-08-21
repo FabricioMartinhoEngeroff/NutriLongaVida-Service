@@ -1,11 +1,14 @@
-package com.DvFabricio.NutriLongaVida.core.paciente;
+package com.DvFabricio.NutriLongaVida.core.paciente.domain;
 
 import com.DvFabricio.NutriLongaVida.core.endereco.DadosEndereco;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record DadosCadastroPaciente(
+public record PacienteDTO(
+
+        Long id,
+
         @NotBlank(message = "Nome é obrigatório")
         String nome,
 

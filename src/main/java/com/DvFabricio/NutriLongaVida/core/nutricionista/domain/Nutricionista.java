@@ -40,4 +40,12 @@ public class Nutricionista {
         this.endereco = new Endereco(dto.endereco());
         this.ativo = true;
     }
+
+    public void excluir() {
+        this.ativo = false;
+    }
+
+    public void reativar() {
+        this.ativo = true;
+    }
 }

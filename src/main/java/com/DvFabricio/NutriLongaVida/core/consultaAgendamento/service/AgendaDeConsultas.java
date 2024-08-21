@@ -7,7 +7,7 @@ import com.DvFabricio.NutriLongaVida.core.consultaAgendamento.validacaoConsulta.
 import com.DvFabricio.NutriLongaVida.infra.excecoes.ValidacaoException;
 import com.DvFabricio.NutriLongaVida.core.nutricionista.domain.Nutricionista;
 import com.DvFabricio.NutriLongaVida.core.nutricionista.repository.NutricionistaRepository;
-import com.DvFabricio.NutriLongaVida.core.paciente.PacienteRepository;
+import com.DvFabricio.NutriLongaVida.core.paciente.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

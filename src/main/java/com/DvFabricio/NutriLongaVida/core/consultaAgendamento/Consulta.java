@@ -2,7 +2,7 @@ package com.DvFabricio.NutriLongaVida.core.consultaAgendamento;
 
 
 import com.DvFabricio.NutriLongaVida.core.nutricionista.domain.Nutricionista;
-import com.DvFabricio.NutriLongaVida.core.paciente.Paciente;
+import com.DvFabricio.NutriLongaVida.core.paciente.domain.Paciente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
