@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-
 @Table(name = "consultas")
 @Entity(name = "Consulta")
 @Getter
@@ -36,12 +35,7 @@ public class Consulta {
 
     private MotivoCancelamento motivoCancelamento;
 
-
     public void cancelar(MotivoCancelamento motivo) {
         this.motivoCancelamento = motivo;
     }
-
 }
-
-
-

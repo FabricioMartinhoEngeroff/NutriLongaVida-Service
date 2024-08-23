@@ -67,14 +67,21 @@ public class AgendaDeConsultas {
     }
 
     private Nutricionista escolherNutricionista(DadosAgendamentoConsulta dados) {
+        // Verifica se o id do nutricionista foi fornecido
         if (dados.idNutricionista() != null) {
-            return nutricionistaRepository.getReferenceById(dados.idNutricionista());
+            return nutricionistaRepository.findById(dados.idNutricionista())
+                    .orElseThrow(() -> new ValidacaoException("Nutricionista não encontrado!"));
         }
 
+        // Verifica se a especialidade foi fornecida
         if (dados.especialidade() == null) {
             throw new ValidacaoException("Especialidade é obrigatória quando nutricionista não for escolhido!");
         }
 
-        return nutricionistaRepository.escolherNutricionistaAleatorioDisponivelNaData(dados.especialidade(), LocalDate.from(dados.data()));
+        // Escolhe um nutricionista aleatório disponível na data
+        return nutricionistaRepository.escolherNutricionistaAleatorioDisponivelNaData(
+                dados.especialidade(),
+                LocalDate.from(dados.data())
+        );
     }
 }

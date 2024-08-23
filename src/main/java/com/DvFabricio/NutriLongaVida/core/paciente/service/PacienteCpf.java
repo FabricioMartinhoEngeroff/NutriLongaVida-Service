@@ -1,4 +1,4 @@
-package com.DvFabricio.NutriLongaVida.core.endereco;
+package com.DvFabricio.NutriLongaVida.core.paciente.service;
 
 import com.DvFabricio.NutriLongaVida.infra.excecoes.ValidacaoException;
 import lombok.EqualsAndHashCode;

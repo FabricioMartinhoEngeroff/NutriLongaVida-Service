@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Pattern;
 
 public record NutricionistaDTO(
 
-
         Long id,
 
         @NotBlank(message = "Nome é obrigatório")

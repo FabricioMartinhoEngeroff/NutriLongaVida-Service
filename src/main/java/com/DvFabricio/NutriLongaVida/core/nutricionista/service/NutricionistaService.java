@@ -100,6 +100,7 @@ public class NutricionistaService {
         repository.save(nutricionista);
     }
 
+
     public void atualizarInformacoesNutricionista(Long id, NutricionistaDTO dto) {
         Nutricionista nutricionista = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Nutricionista não encontrado com id " + id));

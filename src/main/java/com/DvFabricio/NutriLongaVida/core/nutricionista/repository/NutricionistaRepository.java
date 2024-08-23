@@ -29,7 +29,7 @@ public interface NutricionistaRepository extends JpaRepository<Nutricionista, Lo
     @Query("SELECT n FROM Nutricionista n " +
             "WHERE n.especialidade = :especialidade " +
             "AND n.ativo = true " +
-            "AND n.id NOT IN (SELECT c.idNutricionista FROM Consulta c WHERE c.data = :data) " +
+            "AND n.id NOT IN (SELECT c.nutricionista.id FROM Consulta c WHERE c.data = :data) " +
             "ORDER BY FUNCTION('RAND')")
     Nutricionista escolherNutricionistaAleatorioDisponivelNaData(@Param("especialidade") Especialidade especialidade, @Param("data") LocalDate data);
 
